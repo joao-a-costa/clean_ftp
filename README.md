@@ -1,12 +1,54 @@
-# clean_ftp
-This script is a Python function named clean_ftp that performs cleanup operations on a specified FTP server. It takes no input arguments and does not return any output.
+# Cleanup FTP
 
-The script first imports the required libraries, including ftplib for communicating with the FTP server and datetime for manipulating dates and times. It then defines several constants, including the FTP server URL, username, and password, as well as a list of folders to be cleaned up, a maximum age of files in days, the maximum number of files to keep, the FTP backup folder, and a list of folders to ignore during cleanup.
+## Introduction
 
-The script then creates a backup folder if it doesn't exist and defines two functions: cleanup_ftp and cleanup_ftp_backup.
+This script, `clean_ftp.py`, is designed to facilitate the cleanup of files within specified FTP folders. It connects to a specified FTP server, logs in, and recursively deletes files that exceed a specified age while maintaining a maximum number of files. Additionally, it backs up the deleted files to a designated backup folder on the FTP server.
 
-The cleanup_ftp function recursively deletes files in an FTP folder that are older than the maximum age while keeping a maximum number of files. Deleted files are moved to the backup folder in the FTP. The function skips processing if the current folder is in the ignore list.
+## Features
 
-The cleanup_ftp_backup function deletes backup files in the FTP folder that are older than the specified number of days. The function loops through all files in the folder and deletes any files that are older than the specified number of days.
+- **FTP Server Connection**: Establishes a connection to the specified FTP server using the provided credentials.
 
-Finally, the script opens an FTP connection, logs in, and cleans up the specified folder by calling the cleanup_ftp function for each folder in the FTP_FOLDERS list, followed by the cleanup_ftp_backup function for the backup folder. The script can be customized by modifying the constants at the top of the script to suit specific cleanup requirements.
+- **Cleanup Functionality**: Recursively deletes old files in the specified FTP folders, ensuring that the total number of files does not exceed a specified limit.
+
+- **Backup Mechanism**: Moves the deleted files to a designated backup folder on the FTP server for archival purposes.
+
+- **Customization**: Allows customization of FTP server details, cleanup criteria (age and maximum files), and backup folder location.
+
+- **Logging (Optional)**: Includes optional logging functionality to track the cleanup process. Logging can be enabled by uncommenting relevant sections in the code.
+
+## Prerequisites
+
+Before using the script, ensure you have the following:
+
+- Python 3.x installed on your machine.
+- The `ftplib` library, part of the Python standard library, is available.
+
+## Configuration
+
+To use the script, you need to configure the following parameters within the script:
+
+- `FTP_SERVER`: The URL of the FTP server.
+- `FTP_USER`: The FTP username for authentication.
+- `FTP_PASS`: The FTP password for authentication.
+- `FTP_FOLDERS`: A list of FTP folders to be cleaned up.
+- `MAX_AGE_DAYS_BACKUP`: The maximum age of files in days for the backup cleanup.
+- `MAX_FILES`: The maximum number of files to keep during cleanup.
+- `BACKUP_FOLDER`: The FTP backup folder where deleted files are archived.
+- `IGNORE_FOLDERS`: (Optional) A list of folders to be excluded from cleanup.
+- `DEBUG`: Set to `True` to enable debug mode, where files are not deleted or moved. Set to `False` for normal operation.
+
+## Usage
+
+To execute the script, run it as a standalone Python script:
+
+python clean_ftp.py
+
+Ensure the script has the necessary permissions to connect to the specified FTP server and perform cleanup operations.
+
+## Notes
+
+- The script uses the FTP MDTM command to retrieve file modification times. Ensure that your FTP server supports this command.
+- Take precautions and thoroughly review the script before executing it on critical systems to avoid unintended data loss.
+
+## License
+- This script is provided under the MIT License. Feel free to modify and distribute it according to your needs.
